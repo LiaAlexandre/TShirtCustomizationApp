@@ -8,7 +8,6 @@ namespace TShirtCustomizationApp.Entity.Interfaces
 {
     public interface IItem: IEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

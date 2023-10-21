@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TShirtCustomizationApp.Entity.Interfaces
 {
-    public interface IItemFabric
+    public interface IItemFabric : IEntity
     {
+        public int ItemId { get; set; }
     }
 }

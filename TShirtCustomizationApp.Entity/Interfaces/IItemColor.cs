@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace TShirtCustomizationApp.Entity.Interfaces
 {
-    public interface IItemColor
+    public interface IItemColor : IEntity
     {
+        public string Name { get; set; }
+
+        public int ItemId { get; set; }
     }
 }
