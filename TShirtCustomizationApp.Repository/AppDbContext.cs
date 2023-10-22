@@ -1,17 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TShirtCustomizationApp.Entity;
-using TShirtCustomizationApp.Entity.Interfaces;
 
 namespace TShirtCustomizationApp.Repository
 {
     public class AppDbContext : DbContext
     {
-
         public DbSet<Item> _itemDbSet;
         public DbSet<Color> _colorDbSet;
         public DbSet<Fabric> _fabricDbSet;

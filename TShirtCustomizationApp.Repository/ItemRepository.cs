@@ -1,6 +1,4 @@
-﻿using System.Data.Entity;
-using TShirtCustomizationApp.Entity;
-using TShirtCustomizationApp.Entity.Interfaces;
+﻿using TShirtCustomizationApp.Entity;
 using TShirtCustomizationApp.Repository.Interfaces;
 
 namespace TShirtCustomizationApp.Repository

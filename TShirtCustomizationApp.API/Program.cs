@@ -4,7 +4,6 @@ using TShirtCustomizationApp.Repository;
 using TShirtCustomizationApp.Repository.Interfaces;
 using TShirtCustomizationApp.Service;
 using TShirtCustomizationApp.Service.Interfaces;
-using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
 

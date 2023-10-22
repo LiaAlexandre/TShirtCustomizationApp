@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TShirtCustomizationApp.API.Models;
-using TShirtCustomizationApp.Service.DTOs.Interfaces;
 using TShirtCustomizationApp.Service.Interfaces;
 
 namespace TShirtCustomizationApp.API.Controllers
@@ -77,7 +76,7 @@ namespace TShirtCustomizationApp.API.Controllers
             }
             catch (Exception) { }
 
-            return BadRequest($"Request failed. Item ID");
+            return BadRequest($"Request failed. Item ID: {model.ItemId}");
         }
     }
 }

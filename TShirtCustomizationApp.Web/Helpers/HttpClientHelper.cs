@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Net.Http.Headers;
-using System.Text;
+﻿using System.Net.Http.Headers;
 
 namespace TShirtCustomizationApp.Web.Helpers
 {
@@ -14,8 +12,6 @@ namespace TShirtCustomizationApp.Web.Helpers
 
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-
-            client.DefaultRequestHeaders.Add("BasicAuth", "");
 
             if (httpMethod == HttpMethod.Get)
             {

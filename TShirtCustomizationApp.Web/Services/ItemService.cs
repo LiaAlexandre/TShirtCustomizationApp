@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Net.Http.Headers;
-using System.Text;
 using TShirtCustomizationApp.Web.Helpers;
 using TShirtCustomizationApp.Web.Models;
 using TShirtCustomizationApp.Web.Services.Interfaces;
