@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TShirtCustomizationApp.Enti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TShirtCustomizationApp.Repository", "TShirtCustomizationApp.Repository\TShirtCustomizationApp.Repository.csproj", "{8E877A37-6281-438F-9B67-270EF06FE78F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TShirtCustomizationApp.Web", "TShirtCustomizationApp.Web\TShirtCustomizationApp.Web.csproj", "{6200C1C5-42C2-4B7D-83F4-2768B7E0D76E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8E877A37-6281-438F-9B67-270EF06FE78F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E877A37-6281-438F-9B67-270EF06FE78F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E877A37-6281-438F-9B67-270EF06FE78F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6200C1C5-42C2-4B7D-83F4-2768B7E0D76E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6200C1C5-42C2-4B7D-83F4-2768B7E0D76E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6200C1C5-42C2-4B7D-83F4-2768B7E0D76E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6200C1C5-42C2-4B7D-83F4-2768B7E0D76E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

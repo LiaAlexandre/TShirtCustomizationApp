@@ -8,8 +8,9 @@ namespace TShirtCustomizationApp.Entity.Interfaces
 {
     public interface IItemColor : IEntity
     {
-        public string Name { get; set; }
 
         public int ItemId { get; set; }
+
+        public int ColorId { get; set; }
     }
 }

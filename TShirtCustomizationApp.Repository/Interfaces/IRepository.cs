@@ -7,14 +7,16 @@ using TShirtCustomizationApp.Entity.Interfaces;
 
 namespace TShirtCustomizationApp.Repository.Interfaces
 {
-    public interface IRepository<T> where T : IEntity
+    public interface IRepository<T> where T : class
     {
         T GetById(int id);
 
-        IList<T> ListAll();
+        IQueryable<T> ListAll();
         
-        T Add(T entity);
+        void Save(T entity);
 
         void Delete(int id);
+
+        void Commit();
     }
 }

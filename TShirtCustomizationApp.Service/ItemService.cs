@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TShirtCustomizationApp.Entity.Factories;
 using TShirtCustomizationApp.Entity.Interfaces;
 using TShirtCustomizationApp.Repository.Interfaces;
 using TShirtCustomizationApp.Service.DTOs;
@@ -13,54 +14,109 @@ namespace TShirtCustomizationApp.Service
 {
     public class ItemService : IItemService
     {
-        private IRepository<IItem> _itemRepository;
-        private IItemColorRepository<IItemColor> _itemColorRepository;
-        private IItemFabricRepository<IItemFabric> _itemFabricRepository;
-        private IImageRepository<IImage> _imageRepository;
+        private IItemRepository _itemRepository;
+        private IItemColorRepository _itemColorRepository;
+        private IItemFabricRepository _itemFabricRepository;
+        private IImageRepository _imageRepository;
+        private IColorRepository _colorRepository;
+        private IFabricRepository _fabricRepository;
 
-        public ItemService(IRepository<IItem> itemRepository, IItemColorRepository<IItemColor> itemColorRepository,
-            IItemFabricRepository<IItemFabric> itemFabricRepository, IImageRepository<IImage> imageRepository)
+        public ItemService(IItemRepository itemRepository, 
+            IItemColorRepository itemColorRepository,
+            IItemFabricRepository itemFabricRepository, 
+            IImageRepository imageRepository,
+            IColorRepository colorRepository,
+            IFabricRepository fabricRepository)
         {
             _itemRepository = itemRepository;
             _itemColorRepository = itemColorRepository;
             _itemFabricRepository = itemFabricRepository;
             _imageRepository = imageRepository;
+            _colorRepository = colorRepository;
+            _fabricRepository = fabricRepository;
         }
-        public void AddImage(int itemId, byte[] image, int itemColorId, int itemFabricId)
+        public void AddImage(int itemId, int colorId, int fabricId, string image64)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _imageRepository.Save(
+                        ImageFactory.CreateImageInstance(itemId, colorId, fabricId, image64)
+                    );
+
+                _imageRepository.Commit();
+            }
+            catch (Exception ex) { }
         }
 
-        public IItem GetById(int id)
+        public IItemDetailDTO GetById(int id)
         {
-            return _itemRepository.GetById(id);
+            IItemDetailDTO itemDetailDTO = new ItemDetailDTO();
+            try
+            {
+                IItem item = _itemRepository.GetById(id);
+
+                itemDetailDTO.ItemId = item.Id;
+                itemDetailDTO.ItemName = item.Name;
+
+                IList<IColor> colors = _colorRepository.ListAll().ToList<IColor>();
+                IList<IFabric> fabrics = _fabricRepository.ListAll().ToList<IFabric>();
+
+                itemDetailDTO.Fabrics = fabrics.Select(x => new FabricDTO() { Id = x.Id, Name = x.Name }).ToList<IFabricDTO>();
+                itemDetailDTO.Colors = colors.Select(x => new ColorDTO() { Id = x.Id, Name = x.Name }).ToList<IColorDTO>();
+
+                IList<IImage> images = _imageRepository.GetByItemId(id);
+
+                itemDetailDTO.Images = images.Select(
+                                                    x => new ImageDTO() 
+                                                    {
+                                                        Id = x.Id, 
+                                                        ItemId = x.ItemId, 
+                                                        ItemColorId = x.ItemColorId, 
+                                                        ItemFabricId = x.ItemFabricId,
+                                                        Image64 = x.Image64 
+                                                        }
+                                                    ).ToList<IImageDTO>();  
+            }
+            catch (Exception) { }
+
+            return itemDetailDTO;
         }
 
         public IList<IItemListDTO> ListAllItems()
         {
             IList<IItemListDTO> itemsList = new List<IItemListDTO>();
 
-            IList<IItem> items = _itemRepository.ListAll();
-
-            foreach (IItem item in items)
+            try
             {
-                IItemListDTO itemList = new ItemListDTO();
+                IList<IItem> items = _itemRepository.ListAll().ToList<IItem>();
 
-                itemList.ItemId = item.Id;
-                itemList.ItemName = item.Name;
-                itemList.ColorsCount = _itemColorRepository.GetByItemId(item.Id).Count;
-                itemList.FabricsCount = _itemFabricRepository.GetByItemId(item.Id).Count;
-                itemList.ImagesCount = _imageRepository.GetByItemId(item.Id).Count;
+                foreach (IItem item in items)
+                {
+                    IItemListDTO itemList = new ItemListDTO();
 
-                itemsList.Add(itemList);
+                    itemList.ItemId = item.Id;
+                    itemList.ItemName = item.Name;
+                    itemList.ColorsCount = _itemColorRepository.GetByItemId(item.Id).Count;
+                    itemList.FabricsCount = _itemFabricRepository.GetByItemId(item.Id).Count;
+                    itemList.ImagesCount = _imageRepository.GetByItemId(item.Id).Count;
+
+                    itemsList.Add(itemList);
+                }
             }
+            catch (Exception ex) { }
 
             return itemsList;
         }
 
-        public void RemoveImage(int idImage)
+        public void RemoveImage(int imageId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _imageRepository.Delete(imageId);
+
+                _imageRepository.Commit();
+            }
+            catch (Exception ex) { }
         }
     }
 }

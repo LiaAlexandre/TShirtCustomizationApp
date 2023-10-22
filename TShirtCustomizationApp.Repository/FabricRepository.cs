@@ -1,12 +1,16 @@
-﻿using System.Data.Entity;
-using TShirtCustomizationApp.Entity.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TShirtCustomizationApp.Entity;
 using TShirtCustomizationApp.Repository.Interfaces;
 
 namespace TShirtCustomizationApp.Repository
 {
-    public class FabricRepository : AbstractRepository, IRepository<IEntity>
+    public class FabricRepository : AbstractRepository<Fabric>, IFabricRepository
     {
-        public FabricRepository(DbContext context) : base(context)
+        public FabricRepository(AppDbContext context) : base(context)
         {
         }
     }

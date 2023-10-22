@@ -9,39 +9,45 @@ using TShirtCustomizationApp.Repository.Interfaces;
 
 namespace TShirtCustomizationApp.Repository
 {
-    public abstract class AbstractRepository: IRepository<IEntity>
+    public class AbstractRepository<T> : IRepository<T> where T : class
     {
-        protected readonly DbContext _context;
-        protected readonly DbSet<IEntity> _set;
+        protected AppDbContext _context;
 
-        public AbstractRepository(DbContext context)
+        public AbstractRepository(AppDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _set = context.Set<IEntity>();
         }
 
-        public IEntity Add(IEntity entity)
+        public T GetById(int id)
         {
-            var entityEntry = _set.Add(entity);
+            return _context.Set<T>().Find(id);
+        }
 
-            _context.SaveChanges();
+        public IQueryable<T> ListAll()
+        {
+            return _context.Set<T>();
+        }
 
-            return entityEntry;
+        void IRepository<T>.Save(T entity)
+        {
+            _context.Set<T>().Add(entity);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var entity = _context.Set<T>().Find(id);
+
+            if (entity != null)
+            {
+                _context.Set<T>().Remove(entity);
+            }
+            else
+                throw new EntryPointNotFoundException();
         }
 
-        public IList<IEntity> ListAll()
+        public void Commit()
         {
-            return _set.ToList();
-        }
-
-        IEntity IRepository<IEntity>.GetById(int id)
-        {
-            return _set.Find(id);
+            _context.SaveChanges();
         }
     }
 }
