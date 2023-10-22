@@ -1,8 +1,29 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model List<ItemListViewModel>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item Id</th>
+            <th>Item Name</th>
+            <th>Nº Colors</th>
+            <th>Nº Fabrics</th>
+            <th>Nº Images</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ItemId</td>
+                <td>@item.ItemName</td>
+                <td>@item.ColorsCount</td>
+                <td>@item.FabricsCount</td>
+                <td>@item.ImagesCount</td>
+                <td>
+                    <a href="@Url.Action("EditImages", "Home", new { itemId = item.ItemId })" class="btn btn-primary">Edit Images</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

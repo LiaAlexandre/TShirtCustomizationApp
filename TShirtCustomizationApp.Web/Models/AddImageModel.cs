@@ -1,7 +1,9 @@
-﻿namespace TShirtCustomizationApp.API.Models
+﻿namespace TShirtCustomizationApp.Web.Models
 {
     public class AddImageModel
     {
+        public int Id { get; set; }
+
         public int ItemId { get; set; }
 
         public int ColorId { get; set; }

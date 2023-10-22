@@ -1,7 +1,12 @@
+using TShirtCustomizationApp.Web.Services;
+using TShirtCustomizationApp.Web.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IItemService, ItemService>();
 
 var app = builder.Build();
 

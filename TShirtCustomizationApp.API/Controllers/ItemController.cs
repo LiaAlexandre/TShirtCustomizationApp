@@ -65,17 +65,19 @@ namespace TShirtCustomizationApp.API.Controllers
 
         [HttpPost]
         [Route("AddImage")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public ObjectResult AddImage([FromBody] AddImageModel model)
         {
             try
             {
-                _itemService.AddImage(model.ItemId.Value, model.ColorId.Value, model.FabricId.Value, model.Image64);
+                _itemService.AddImage(model.ItemId, model.ColorId, model.FabricId, model.Image64);
 
                 return Ok("Request processed.");
             }
             catch (Exception) { }
 
-            return BadRequest($"Request failed. Item ID:{model.ItemId.Value}");
+            return BadRequest($"Request failed. Item ID");
         }
     }
 }

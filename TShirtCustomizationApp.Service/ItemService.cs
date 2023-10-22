@@ -21,9 +21,9 @@ namespace TShirtCustomizationApp.Service
         private IColorRepository _colorRepository;
         private IFabricRepository _fabricRepository;
 
-        public ItemService(IItemRepository itemRepository, 
+        public ItemService(IItemRepository itemRepository,
             IItemColorRepository itemColorRepository,
-            IItemFabricRepository itemFabricRepository, 
+            IItemFabricRepository itemFabricRepository,
             IImageRepository imageRepository,
             IColorRepository colorRepository,
             IFabricRepository fabricRepository)
@@ -61,21 +61,28 @@ namespace TShirtCustomizationApp.Service
                 IList<IColor> colors = _colorRepository.ListAll().ToList<IColor>();
                 IList<IFabric> fabrics = _fabricRepository.ListAll().ToList<IFabric>();
 
-                itemDetailDTO.Fabrics = fabrics.Select(x => new FabricDTO() { Id = x.Id, Name = x.Name }).ToList<IFabricDTO>();
-                itemDetailDTO.Colors = colors.Select(x => new ColorDTO() { Id = x.Id, Name = x.Name }).ToList<IColorDTO>();
+                var itemColors = _itemColorRepository.GetByItemId(id);
+                var itemFabrics = _itemFabricRepository.GetByItemId(id);
+
+                itemDetailDTO.Fabrics = fabrics.Where(fabric => itemFabrics.Any(itemFabric => itemFabric.FabricId == fabric.Id))
+                    .Select(x => new FabricDTO() { Id = x.Id, Name = x.Name })
+                    .ToList<IFabricDTO>();
+                itemDetailDTO.Colors = colors.Where(color => itemColors.Any(itemColor => itemColor.ColorId == color.Id))
+                    .Select(x => new ColorDTO() { Id = x.Id, Name = x.Name })
+                    .ToList<IColorDTO>();
 
                 IList<IImage> images = _imageRepository.GetByItemId(id);
 
                 itemDetailDTO.Images = images.Select(
-                                                    x => new ImageDTO() 
+                                                    x => new ImageDTO()
                                                     {
-                                                        Id = x.Id, 
-                                                        ItemId = x.ItemId, 
-                                                        ItemColorId = x.ItemColorId, 
+                                                        Id = x.Id,
+                                                        ItemId = x.ItemId,
+                                                        ItemColorId = x.ItemColorId,
                                                         ItemFabricId = x.ItemFabricId,
-                                                        Image64 = x.Image64 
-                                                        }
-                                                    ).ToList<IImageDTO>();  
+                                                        Image64 = x.Image64
+                                                    }
+                                                    ).ToList<IImageDTO>();
             }
             catch (Exception) { }
 

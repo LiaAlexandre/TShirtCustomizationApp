@@ -1,0 +1,92 @@
+﻿@model ItemDetailsViewModel
+
+<style>
+    .thumbnail-container {
+        display: inline-block;
+        margin: 5px;
+        width: 25px;
+        height: 25px;
+        position: relative;
+    }
+
+    .thumbnail {
+        width: 25px;
+        height: 25px;
+    }
+
+    .remove-button {
+        position: absolute;
+        top: 1px;
+        right: 2px;
+        background-color: transparent;
+        color: black;
+        font-size: 9px;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    th {
+        width: 100px;
+    }
+    
+    .table tbody td {
+        height: 55px; 
+    }
+    
+</style>
+
+<div class="row">
+    <div class="col-md-8">
+        <p>Item Id: @Model.ItemId</p>
+        <p>Item Name: @Model.ItemName</p>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            @foreach (var color in Model.Colors)
+            {
+                <th>@color.Name</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Fabrics.Count; i++)
+        {
+            <tr>
+                <td>@Model.Fabrics[i].Name</td>
+                @foreach (var color in Model.Colors)
+                {
+                    var images = Model.Images
+                    .Where(x => x.ItemColorId == color.Id && x.ItemFabricId == Model.Fabrics[i].Id)
+                    .ToList();
+
+                    <td>
+                        @foreach (var image in images)
+                        {
+                            <div class="thumbnail-container">
+                                <img src="data:image/png;base64,@image.Image64" alt="Thumbnail" class="thumbnail" />
+                                <a href="@Url.Action("RemoveImage", "Home", new { imageId = image.Id })" class="remove-button">x</a>
+                            </div>
+                        }
+
+                        <form action="@Url.Action("AddImage", "Home")" method="post" enctype="multipart/form-data" style="display: inline-block;">
+                            <input type="hidden" name="ItemId" value="@Model.ItemId" />
+                            <input type="hidden" name="ColorId" value="@color.Id" />
+                            <input type="hidden" name="FabricId" value="@Model.Fabrics[i].Id" />
+                            <input type="file" name="ImageFile" style="display: none;" id="fileInput_@(color.Id)_@(Model.Fabrics[i].Id)" onchange="document.getElementById('submitButton_@(color.Id)_@(Model.Fabrics[i].Id)').click();" />
+                            <label for="fileInput_@(color.Id)_@(Model.Fabrics[i].Id)" class="btn btn-sm btn-secondary">Add</label>
+                            <input type="submit" id="submitButton_@(color.Id)_@(Model.Fabrics[i].Id)" style="display: none;" />
+                        </form>
+                    </td>
+                }
+            </tr>
+        }
+
+    </tbody>
+</table>
+<div style="text-align: right;">
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Back</a>
+</div>
