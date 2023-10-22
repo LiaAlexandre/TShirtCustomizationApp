@@ -92,6 +92,9 @@
      - WEB: `TShirtCustomizationApp.Web`
 
 ## Images
+![image](https://github.com/LiaAlexandre/TShirtCustomizationApp/assets/47008881/49113248-b3d9-4696-a56e-b6a80b539b54)
+![image](https://github.com/LiaAlexandre/TShirtCustomizationApp/assets/47008881/cbd4de47-6e1d-455f-b7ce-09c6c82ab83c)
+
 
 ## Version Control
 
