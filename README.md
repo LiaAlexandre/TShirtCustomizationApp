@@ -86,7 +86,10 @@
    - Open a terminal in the folder: `TShirtCustomizationApp\TShirtCustomizationApp.Repository`.
    - Run the `dotnet ef database update` command to apply the required migrations.
 
-7. **Running the Projects:**
+7. **Populating the database**
+   - Execute the data.sql file to load the information into the database
+
+8. **Running the Projects:**
    - Run the projects:
      - API: `TShirtCustomizationApp.API`
      - WEB: `TShirtCustomizationApp.Web`
